@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkers!</title>
+    <title>Checkers</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -19,109 +19,132 @@
     <link href="./css/style.css" rel="stylesheet" />
   </head>
   <body>
+
     <div class="container">
+      <div class="row">
+        <div class="header col-sm-12">
 
-      <div class="header">
-
+        </div>
       </div>
 
-      <div class="board-container">
+      <div class="row">
 
-        <!-- row 0 from top -->
-        <div class="tile board" id="tile-0-0"></div>
-        <div class="tile" id="tile-0-1"></div>
-        <div class="tile board" id="tile-0-2"></div>
-        <div class="tile" id="tile-0-3"></div>
-        <div class="tile board" id="tile-0-4"></div>
-        <div class="tile" id="tile-0-5"></div>
-        <div class="tile board" id="tile-0-6"></div>
-        <div class="tile" id="tile-0-7"></div>
+        <div class="board-container col-sm-9 col-xs-12">
 
-        <!-- row 1 from top, player1 -->
+          <!-- row 0 from top -->
+          <div class="tile board" id="tile-0-0"></div>
+          <div class="tile" id="tile-0-1"></div>
+          <div class="tile board" id="tile-0-2"></div>
+          <div class="tile" id="tile-0-3"></div>
+          <div class="tile board" id="tile-0-4"></div>
+          <div class="tile" id="tile-0-5"></div>
+          <div class="tile board" id="tile-0-6"></div>
+          <div class="tile" id="tile-0-7"></div>
 
-        <div class="tile" id="tile-1-0"></div>
-        <div class="tile board" id="tile-1-1"></div>
-        <div class="tile" id="tile-1-2"></div>
-        <div class="tile board" id="tile-1-3"></div>
-        <div class="tile" id="tile-1-4"></div>
-        <div class="tile board" id="tile-1-5"></div>
-        <div class="tile" id="tile-1-6"></div>
-        <div class="tile board" id="tile-1-7"></div>
+          <!-- row 1 from top, player1 -->
 
-        <!-- row 2 from top, player1 -->
+          <div class="tile" id="tile-1-0"></div>
+          <div class="tile board" id="tile-1-1"></div>
+          <div class="tile" id="tile-1-2"></div>
+          <div class="tile board" id="tile-1-3"></div>
+          <div class="tile" id="tile-1-4"></div>
+          <div class="tile board" id="tile-1-5"></div>
+          <div class="tile" id="tile-1-6"></div>
+          <div class="tile board" id="tile-1-7"></div>
 
-        <div class="tile board" id="tile-2-0"></div>
-        <div class="tile" id="tile-2-1"></div>
-        <div class="tile board" id="tile-2-2"></div>
-        <div class="tile" id="tile-2-3"></div>
-        <div class="tile board" id="tile-2-4"></div>
-        <div class="tile" id="tile-2-5"></div>
-        <div class="tile board" id="tile-2-6"></div>
-        <div class="tile" id="tile-2-7"></div>
+          <!-- row 2 from top, player1 -->
 
-        <!-- row 3 from top, board -->
+          <div class="tile board" id="tile-2-0"></div>
+          <div class="tile" id="tile-2-1"></div>
+          <div class="tile board" id="tile-2-2"></div>
+          <div class="tile" id="tile-2-3"></div>
+          <div class="tile board" id="tile-2-4"></div>
+          <div class="tile" id="tile-2-5"></div>
+          <div class="tile board" id="tile-2-6"></div>
+          <div class="tile" id="tile-2-7"></div>
 
-        <div class="tile board" id="tile-3-0"></div>
-        <div class="tile board" id="tile-3-1"></div>
-        <div class="tile board" id="tile-3-2"></div>
-        <div class="tile board" id="tile-3-3"></div>
-        <div class="tile board" id="tile-3-4"></div>
-        <div class="tile board" id="tile-3-5"></div>
-        <div class="tile board" id="tile-3-6"></div>
-        <div class="tile board" id="tile-3-7"></div>
+          <!-- row 3 from top, board -->
 
-        <!-- row 4 from top, board -->
+          <div class="tile board" id="tile-3-0"></div>
+          <div class="tile board" id="tile-3-1"></div>
+          <div class="tile board" id="tile-3-2"></div>
+          <div class="tile board" id="tile-3-3"></div>
+          <div class="tile board" id="tile-3-4"></div>
+          <div class="tile board" id="tile-3-5"></div>
+          <div class="tile board" id="tile-3-6"></div>
+          <div class="tile board" id="tile-3-7"></div>
 
-        <div class="tile board" id="tile-4-0"></div>
-        <div class="tile board" id="tile-4-1"></div>
-        <div class="tile board" id="tile-4-2"></div>
-        <div class="tile board" id="tile-4-3"></div>
-        <div class="tile board" id="tile-4-4"></div>
-        <div class="tile board" id="tile-4-5"></div>
-        <div class="tile board" id="tile-4-6"></div>
-        <div class="tile board" id="tile-4-7"></div>
+          <!-- row 4 from top, board -->
 
-        <!-- row 5 from top, player2 -->
+          <div class="tile board" id="tile-4-0"></div>
+          <div class="tile board" id="tile-4-1"></div>
+          <div class="tile board" id="tile-4-2"></div>
+          <div class="tile board" id="tile-4-3"></div>
+          <div class="tile board" id="tile-4-4"></div>
+          <div class="tile board" id="tile-4-5"></div>
+          <div class="tile board" id="tile-4-6"></div>
+          <div class="tile board" id="tile-4-7"></div>
 
-        <div class="tile" id="tile-5-0"></div>
-        <div class="tile board" id="tile-5-1"></div>
-        <div class="tile" id="tile-5-2"></div>
-        <div class="tile board" id="tile-5-3"></div>
-        <div class="tile" id="tile-5-4"></div>
-        <div class="tile board" id="tile-5-5"></div>
-        <div class="tile" id="tile-5-6"></div>
-        <div class="tile board" id="tile-5-7"></div>
+          <!-- row 5 from top, player2 -->
 
-        <!-- row 6 from top, player2 -->
+          <div class="tile" id="tile-5-0"></div>
+          <div class="tile board" id="tile-5-1"></div>
+          <div class="tile" id="tile-5-2"></div>
+          <div class="tile board" id="tile-5-3"></div>
+          <div class="tile" id="tile-5-4"></div>
+          <div class="tile board" id="tile-5-5"></div>
+          <div class="tile" id="tile-5-6"></div>
+          <div class="tile board" id="tile-5-7"></div>
 
-        <div class="tile board" id="tile-6-0"></div>
-        <div class="tile" id="tile-6-1"></div>
-        <div class="tile board" id="tile-6-2"></div>
-        <div class="tile" id="tile-6-3"></div>
-        <div class="tile board" id="tile-6-4"></div>
-        <div class="tile" id="tile-6-5"></div>
-        <div class="tile board" id="tile-6-6"></div>
-        <div class="tile" id="tile-6-7"></div>
+          <!-- row 6 from top, player2 -->
 
-        <!-- row 5 from top, player2 -->
+          <div class="tile board" id="tile-6-0"></div>
+          <div class="tile" id="tile-6-1"></div>
+          <div class="tile board" id="tile-6-2"></div>
+          <div class="tile" id="tile-6-3"></div>
+          <div class="tile board" id="tile-6-4"></div>
+          <div class="tile" id="tile-6-5"></div>
+          <div class="tile board" id="tile-6-6"></div>
+          <div class="tile" id="tile-6-7"></div>
 
-        <div class="tile" id="tile-7-0"></div>
-        <div class="tile board" id="tile-7-1"></div>
-        <div class="tile" id="tile-7-2"></div>
-        <div class="tile board" id="tile-7-3"></div>
-        <div class="tile" id="tile-7-4"></div>
-        <div class="tile board" id="tile-7-5"></div>
-        <div class="tile" id="tile-7-6"></div>
-        <div class="tile board" id="tile-7-7"></div>
+          <!-- row 5 from top, player2 -->
+
+          <div class="tile" id="tile-7-0"></div>
+          <div class="tile board" id="tile-7-1"></div>
+          <div class="tile" id="tile-7-2"></div>
+          <div class="tile board" id="tile-7-3"></div>
+          <div class="tile" id="tile-7-4"></div>
+          <div class="tile board" id="tile-7-5"></div>
+          <div class="tile" id="tile-7-6"></div>
+          <div class="tile board" id="tile-7-7"></div>
+
+        </div>
+        <div class="aside col-sm-3 col-xs-12">
+          <div>
+            <div>
+              Players
+            </div>
+            <label> 1 <input type="radio" name="players"/></label>
+            <label> 2 <input type="radio" name="players"/></label>
+          </div>
+          <div>
+            <div>
+              Red Side
+            </div>
+            <label> Top <input type="radio" name="red-side"/></label>
+            <label> Bottom <input type="radio" name="red-side"/></label>
+          </div>
+          <button class="btn btn-primary">Start</button>
+          <button class="btn btn-secondary">Restart</button>
+        </div>
+
+
 
       </div>
+      <div class="row">
+        <div class="footer col-sm-12">
 
-      <div class="aside">
-
-      </div>
-
-      <div class="footer">
-
+        </div>
       </div>
 
     </div>

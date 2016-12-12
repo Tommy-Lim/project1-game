@@ -1,15 +1,14 @@
 body{
   background-image: url("../img/checkers-texture-game.png");
+
 }
 
 .container{
+  border: 1px solid red;
   width: 118vh;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .header{
-  width: 118vh;
   height: 8vh;
   background-color: black;
 }
@@ -58,13 +57,11 @@ body{
 }
 
 .aside{
-  width:24vh;
   height: 84vh;
   background-color: yellow;
 }
 
 .footer{
-  width: 118vh;
   height: 8vh;
   background-color: black;
 }
