@@ -1,0 +1,70 @@
+body{
+  background-image: url("../img/checkers-texture-game.png");
+}
+
+.container{
+  width: 118vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header{
+  width: 118vh;
+  height: 8vh;
+  background-color: black;
+}
+
+.board-container{
+  width: 84vh;
+  padding: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;;
+  background-image: url("../img/checkers-board.jpg");
+  background-size: cover;
+}
+
+
+.tile{
+  width: 10vh;
+  height: 10vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.tile:hover{
+  /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.chosen{
+  border: 1px solid green;
+}
+
+.black{
+  background-image: url("../img/checkers-checker-black.svg");
+}
+
+.red{
+  background-image: url("../img/checkers-checker-red.svg");
+}
+
+.black-king{
+  background-image: url("../img/checkers-checker-black-king.svg");
+}
+
+.red-king{
+  background-image: url("../img/checkers-checker-red-king.svg");
+}
+
+.aside{
+  width:24vh;
+  height: 84vh;
+  background-color: yellow;
+}
+
+.footer{
+  width: 118vh;
+  height: 8vh;
+  background-color: black;
+}
