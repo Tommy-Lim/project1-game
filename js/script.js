@@ -64,12 +64,38 @@ function isOpponents(x,y){
   }
 }
 
+function isGameOver(){
+  var redCheckers = 0;
+  var blackCheckers = 0;
+  for(x=0; x<checkersArray.length; x++){
+    for(y=0; y<checkersArray.length; y++){
+      if(checkersArray[x][y].color=="red"){
+        redCheckers++;
+      } else if(checkersArray[x][y].color=="black"){
+        blackCheckers++;
+      }
+    }
+  }
+  console.log(redCheckers,blackCheckers);
+  if(redCheckers===0){
+    $(".header span").text("Black wins!");
+    playerTurn = "Paused";
+  } else if(blackCheckers===0){
+    $(".header span").text("Red wins!");
+    playerTurn = "Paused";
+  }
+}
+
 function switchColor(color){
   if(color=="red"){
     return "black";
   } else if(color=="black"){
     return "red";
   }
+}
+
+function areMoreJumps(){
+
 }
 
 function resetTile(x,y){
@@ -124,61 +150,11 @@ function calcMiddle(p1,p2){
   }
 }
 
-function isDiagonal(x,y){
+function assignDirection(){
   if(checkersArray[start.x][start.y].side=="top"){
     currentDirection = 1;
   } else{
     currentDirection = -1;
-  }
-
-  var dx = x-start.x;
-  var dy = y-start.y;
-
-  if((dx==1||dx==-1)&&dy==currentDirection){
-    console.log("the square is diagonal one");
-    return true;
-  }else if(checkersArray[start.x][start.y].king&&((dx==1||dx==-1)&&(dy==1||dy==-1))){
-    console.log("the square is diagonal one for king");
-    return true;
-  } else{
-    console.log("the square is not diagonal");
-  }
-
-  if(checkersArray[start.x][start.y].king){
-
-    if((dx==2||dx==-2)&&(dy==-2||dy==2)){
-
-      //code for if a king
-      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
-      if(isOpponents(middle.x,middle.y)){
-        console.log("jump opponent left");
-        countScore();
-        resetTile(middle.x,middle.y);
-        return true;
-      }else{
-        //do nothing because nothing to jump
-      }
-
-    }else{
-      console.log("the square is not diagonal");
-    }
-
-  }else {
-
-    //code for if not a king
-    if((dx==2||dx==-2)&&dy==currentDirection*2){
-      console.log("the square is diagonal two");
-      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
-      if(isOpponents(middle.x,middle.y)){
-        console.log("jump opponent left");
-        countScore();
-        resetTile(middle.x,middle.y);
-        return true;
-      }
-    }else {
-      console.log("the square is not diagonal");
-    }
-
   }
 }
 
@@ -221,6 +197,7 @@ function switchTurns(){
   $(".header span").text(playerTurn+"'s turn!");
   $("#"+playerTurn+"Counter").toggleClass("dark");
   $("#"+playerTurn+"Caret").toggleClass("dark");
+  isGameOver();
 }
 
 function movePiece(){
@@ -236,6 +213,9 @@ function movePiece(){
 function setBoard(){
   redScore = 0;
   blackScore = 0;
+  start = null;
+  middle = null;
+  end = null;
   $("#redCounter").text("0");
   $("#blackCounter").text("0");
   playerTurn = players[Math.round(Math.random())];
@@ -267,37 +247,74 @@ function setBoard(){
       }
     }
   }
-  console.log("board reset");
+}
+
+
+function isDiagonal(x,y){
+  assignDirection();
+
+  var dx = x-start.x;
+  var dy = y-start.y;
+
+  //check if move is diagonal one
+  if((dx==1||dx==-1)&&dy==currentDirection){
+    //move is diagonal one in right direction
+    return true;
+  }else if(checkersArray[start.x][start.y].king&&((dx==1||dx==-1)&&(dy==1||dy==-1))){
+    //move is diagonal one for a king in any direction
+    return true;
+  } else{
+  }
+
+
+  if(checkersArray[start.x][start.y].king){
+    //code for if a king
+    if((dx==2||dx==-2)&&(dy==-2||dy==2)){
+      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
+      if(isOpponents(middle.x,middle.y)){
+        countScore();
+        resetTile(middle.x,middle.y);
+        return true;
+      }else{
+        //do nothing because nothing to jump
+      }
+    }else{
+      //the square is not diagonal
+    }
+  }else {
+    //code for if not a king
+    if((dx==2||dx==-2)&&dy==currentDirection*2){
+      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
+      if(isOpponents(middle.x,middle.y)){
+        countScore();
+        resetTile(middle.x,middle.y);
+        return true;
+      }
+    }else {
+      //the square is not diagonal
+    }
+  }
 }
 
 $(".tile").click(function(event){
   if(playerTurn!="Paused"){
     var currentX = parseInt(event.currentTarget.id.split("-")[1],10);
     var currentY = parseInt(event.currentTarget.id.split("-")[2],10);
-    console.log(currentX,currentY);
     if(start){
-      console.log("start already set");
       if(isEmpty(currentX,currentY)){
-        console.log("end square is empty");
         if(isDiagonal(currentX,currentY)){
-          console.log("end square is diagonal, set end square");
           setEndCoordinates(currentX,currentY);
           movePiece();
         } else{
-          console.log("square empty but not diagnoal");
         }
       } else if(isPlayers(currentX,currentY)){
         $("#tile-"+start.x+"-"+start.y+" span").remove();
         setStartCoordinates(currentX,currentY);
-        console.log("reset start");
       }
     } else{
-      console.log("start not set, set start");
       if(isPlayers(currentX,currentY)){
         setStartCoordinates(currentX,currentY);
-        console.log("square belongs to player, set start");
       } else{
-        console.log("square not players, dont set start");
       }
     }
   } else{
@@ -306,7 +323,6 @@ $(".tile").click(function(event){
 });
 
 $("#start-button").click(function(){
-  console.log("start pushed");
   redIsTop();
   setBoard();
 });

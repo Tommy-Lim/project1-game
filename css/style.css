@@ -143,8 +143,8 @@ img{
   height: 7vh;
   width: 1vh;
   display: inline-block;
-  margin: 0;
-  padding: 0;
+  position: relative;
+  top: -0.7vh;
 }
 
 .dark{
