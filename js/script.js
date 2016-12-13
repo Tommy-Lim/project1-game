@@ -4,7 +4,7 @@ var playerTop;
 var playerBottom;
 var currentDirection;
 var players = ["red","black", "Paused"];
-var playerTurn = "";
+var playerTurn = "Paused";
 var start = null;
 var end = null;
 
@@ -53,26 +53,26 @@ function isPlayers(x,y){
   }
 }
 
-function resetClass(i,j){
-  $("#tile-"+i+"-"+j).removeClass("black").removeClass("red").removeClass("black-king").removeClass("red-king");
-  checkersArray[i][j].color = "";
-  checkersArray[i][j].king = false;
-  checkersArray[i][j].side = "";
+function resetTile(x,y){
+  $("#tile-"+x+"-"+y).removeClass("black").removeClass("red").removeClass("black-king").removeClass("red-king").removeClass("top").removeClass("bottom");
+  checkersArray[x][y].color = "";
+  checkersArray[x][y].king = false;
+  checkersArray[x][y].side = "";
 }
 
-function addCheckerClass(color, i, j){
-  $("#tile-"+i+"-"+j).addClass(color);
-  checkersArray[i][j].color = color;
+function addCheckerClass(color, x, y){
+  $("#tile-"+x+"-"+y).addClass(color);
+  checkersArray[x][y].color = color;
 }
 
-function addKingClass(i, j){
-  $("#tile-"+i+"-"+j).addClass("king");
-  checkersArray[i][j].king = true;
+function addKingClass(x, y){
+  $("#tile-"+x+"-"+y).addClass("king");
+  checkersArray[x][y].king = true;
 }
 
-function addSideClass(playerSide, i, j){
-    $("#tile-"+i+"-"+j).addClass(playerSide);
-    checkersArray[i][j].side = playerSide;
+function addSideClass(playerSide, x, y){
+    $("#tile-"+x+"-"+y).addClass(playerSide);
+    checkersArray[x][y].side = playerSide;
 }
 
 function availableSpacesRegular(playerSide){
@@ -126,67 +126,89 @@ function redIsTop(){
   }
 }
 
-function setBoard(){
-  playerTurn = players[Math.round(Math.random())];
-  console.log("player is: "+playerTurn);
-  for(i = 0; i<checkersArray.length; i++){
-    if(i%2===0){
-      for(j=1; j<checkersArray[i].length; j+=2){
-        resetClass(i,j);
-        if(i<3){
-          addCheckerClass(playerTop, i, j);
-          addSideClass("top",i, j);
-        } else if (i>4) {
-          addCheckerClass(playerBottom, i, j);
-          addSideClass("bottom", i, j);
-        }
-      }
-    } else{
-      for(j=0; j<checkersArray[i].length; j+=2){
-        resetClass(i,j);
-        if(i<3){
-          addCheckerClass(playerTop, i, j);
-          addSideClass("top",i, j);
-        } else if (i>4) {
-          addCheckerClass(playerBottom, i, j);
-          addSideClass("bottom",i, j);
-        }
-      }
-    }
+function movePiece(){
+  $("#tile-"+start.x+"-"+start.y+" span").remove();
+  $("#tile-"+end.x+"-"+end.y).addClass(playerTurn);
+  checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
+  checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
+  checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
+  resetTile(start.x,start.y);
+  start = null;
+  end = null;
+  if(playerTurn=="red"){
+    playerTurn = "black";
+  } else{
+    playerTurn = "red";
   }
 }
 
-$(".tile").click(function(event){
-  var currentX = parseInt(event.currentTarget.id.split("-")[1],10);
-  var currentY = parseInt(event.currentTarget.id.split("-")[2],10);
-  console.log(currentX,currentY);
-  if(start){
-    console.log("start was not null");
-    if(isEmpty(currentX,currentY)){
-      console.log("square was empty");
-      if(isDiagonal(currentX,currentY)){
-        console.log("square was diagonal");
-        setEndCoordinates(currentX,currentY);
+function setBoard(){
+  playerTurn = players[Math.round(Math.random())];
+  console.log("player is: "+playerTurn);
+  for(y = 0; y<checkersArray.length; y++){
+    if(y%2===0){
+      for(x=1; x<checkersArray[y].length; x+=2){
+        resetTile(x,y);
+        if(y<3){
+          addCheckerClass(playerTop, x, y);
+          addSideClass("top",x, y);
+        } else if (y>4) {
+          addCheckerClass(playerBottom, x, y);
+          addSideClass("bottom", x, y);
+        }
       }
-        console.log("square was empty, set end");
-        setEndCoordinates(currentX,currentY);
-
-    } else if(isPlayers(currentX,currentY)){
-      $("#tile-"+start.x+"-"+start.y+" span").remove();
-      setStartCoordinates(currentX,currentY);
-      console.log("reset start");
-    }
-    // } else if(){
-    //   //is opponent, then check next position
-    // }
-  } else{
-    console.log("start was null");
-    if(isPlayers(currentX,currentY)){
-      setStartCoordinates(currentX,currentY);
-      console.log("square belongs to player, set start");
+    } else{
+      for(x=0; x<checkersArray[y].length; x+=2){
+        resetTile(x,y);
+        if(y<3){
+          addCheckerClass(playerTop, x, y);
+          addSideClass("top",x, y);
+        } else if (y>4) {
+          addCheckerClass(playerBottom, x, y);
+          addSideClass("bottom", x, y);
+        }
+      }
     }
   }
+  console.log("board reset");
+}
 
+$(".tile").click(function(event){
+  if(playerTurn!="Paused"){
+    var currentX = parseInt(event.currentTarget.id.split("-")[1],10);
+    var currentY = parseInt(event.currentTarget.id.split("-")[2],10);
+    console.log(currentX,currentY);
+    if(start){
+      console.log("start already set");
+      if(isEmpty(currentX,currentY)){
+        console.log("end square is empty");
+        if(isDiagonal(currentX,currentY)){
+          console.log("end square is diagonal, set end square");
+          setEndCoordinates(currentX,currentY);
+          movePiece();
+        } else{
+          console.log("square empty but not diagnoal");
+        }
+      } else if(isPlayers(currentX,currentY)){
+        $("#tile-"+start.x+"-"+start.y+" span").remove();
+        setStartCoordinates(currentX,currentY);
+        console.log("reset start");
+      }
+      // } else if(){
+      //   //is opponent, then check next position
+      // }
+    } else{
+      console.log("start not set, set start");
+      if(isPlayers(currentX,currentY)){
+        setStartCoordinates(currentX,currentY);
+        console.log("square belongs to player, set start");
+      } else{
+        console.log("square not players, dont set start");
+      }
+    }
+  } else{
+    //dont play because on pause
+  }
 });
 
 $("#start-button").click(function(){
