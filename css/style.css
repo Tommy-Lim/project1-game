@@ -20,6 +20,7 @@ label{
 }
 button{
   margin: 0vh 0.5vh;
+  width: 100%;
 }
 
 #playersSection, #redSection, #buttonsSection, #counterSection{
@@ -38,6 +39,7 @@ button{
   line-height: 6vh;
   font-size: 5vh;
   margin: 1vh;
+  text-transform: uppercase;
 }
 
 .board-container{
@@ -85,7 +87,10 @@ button{
 }
 
 img{
-  height: 100%;
+  height: 109%;
+  position: relative;
+  top: -6%;
+  left: -3%;
 }
 
 .aside{
@@ -95,20 +100,23 @@ img{
   padding: 2vh;
 }
 
-#redCounter{
-  height: 7vh;
-  width: 7vh;
-  background-image: url("../img/checkers-checker-red.svg");
+#redCounter, #blackCounter{
   background-size: cover;
   display: inline-block;
+  height: 9vh;
+  width: 9vh;
+  line-height: 9vh;
+  text-align: center;
+  color: white;
+  font-size: 4vh;
+}
+
+#redCounter{
+  background-image: url("../img/checkers-checker-red.svg");
 }
 
 #blackCounter{
-  height: 7vh;
-  width: 7vh;
   background-image: url("../img/checkers-checker-black.svg");
-  background-size: cover;
-  display: inline-block;
 }
 
 #toggles{

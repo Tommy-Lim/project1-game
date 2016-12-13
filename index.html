@@ -23,7 +23,7 @@
     <div class="container">
       <div class="row">
         <div class="header col-sm-12">
-          <span>Press start to play!</span>
+          <span>Press start to play</span>
         </div>
       </div>
 
@@ -119,6 +119,14 @@
 
         </div>
         <div class="aside col-sm-3 col-xs-12">
+          <div id="counterSection">
+            <div id="redCounter" class="dark"></div>
+            <div id="toggles">
+              <span><i class="fa fa-caret-left fa-lg dark" id="redCaret" aria-hidden="true"></i></span>
+              <span><i class="fa fa-caret-right fa-lg dark" id="blackCaret" aria-hidden="true"></i></span>
+            </div>
+            <div id="blackCounter" class="dark"></div>
+          </div>
           <div id="playersSection">
               <div>
                 Players
@@ -134,16 +142,8 @@
             <label> Bottom <input type="radio" name="red-side" id="bottom-side"/></label>
           </div>
           <div id="buttonsSection">
-            <button class="btn btn-primary" id="start-button">Start</button>
-            <button class="btn btn-secondary" id="restart-button">Restart</button>
-          </div>
-          <div id="counterSection">
-            <div id="redCounter" class="dark"></div>
-            <div id="toggles">
-              <span><i class="fa fa-caret-left fa-lg dark" id="redCaret" aria-hidden="true"></i></span>
-              <span><i class="fa fa-caret-right fa-lg dark" id="blackCaret" aria-hidden="true"></i></span>
-            </div>
-            <div id="blackCounter" class="dark"></div>
+            <button class="btn btn-primary" id="start-button">New Game</button>
+            <!-- <button class="btn btn-secondary" id="restart-button">Restart</button> -->
           </div>
         </div>
       </div>

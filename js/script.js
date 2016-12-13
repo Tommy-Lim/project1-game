@@ -7,6 +7,9 @@ var players = ["red","black", "Paused"];
 var playerTurn = "Paused";
 var start = null;
 var end = null;
+var middle = null;
+var redScore = 0;
+var blackScore = 0;
 
 var checkersArray = [
   [
@@ -47,6 +50,14 @@ function isEmpty(x,y){
 
 function isPlayers(x,y){
   if(checkersArray[x][y].color == playerTurn){
+    return true;
+  } else{
+    return false;
+  }
+}
+
+function isOpponents(x,y){
+  if(checkersArray[x][y].color != playerTurn){
     return true;
   } else{
     return false;
@@ -96,7 +107,18 @@ function setEndCoordinates(x,y){
     x: x,
     y: y
   };
+}
 
+function countScore(){
+  this[playerTurn+"Score"] ++;
+  $("#"+playerTurn+"Counter").text(this[playerTurn+"Score"]);
+}
+
+function setMiddleCoordinates(x,y){
+  middle = {
+    x: x,
+    y: y
+  };
 }
 
 function isDiagonal(x,y){
@@ -105,9 +127,40 @@ function isDiagonal(x,y){
   } else{
     currentDirection = -1;
   }
+
   console.log("currentDirection: "+currentDirection);
   if((x-start.x==1||x-start.x==-1)&&y-start.y==currentDirection){
-    console.log("the square is diagonal");
+    console.log("the square is diagonal one");
+    return true;
+  }else {
+    console.log("the square is not diagonal");
+  }
+
+  console.log("currentDirection: "+currentDirection);
+  if((x-start.x==2||x-start.x==-2)&&y-start.y==currentDirection*2){
+    console.log("the square is diagonal two");
+      if(start.x-x==2){
+        console.log("attempt jump left");
+        setMiddleCoordinates(start.x-1,start.y+currentDirection);
+        if(isOpponents(middle.x,middle.y)){
+          console.log("jump opponent left");
+          countScore();
+          resetTile(middle.x,middle.y);
+          return true;
+        }
+      } else if(start.x-x==-2){
+        console.log("jump right");
+        setMiddleCoordinates(start.x+1,start.y+currentDirection);
+        if(isOpponents(middle.x,middle.y)){
+          console.log("jump opponent right");
+          countScore();
+          resetTile(middle.x,middle.y);
+          return true;
+        }
+      }
+
+
+
     return true;
   }else {
     console.log("the square is not diagonal");
@@ -129,15 +182,16 @@ function switchTurns(){
   resetTile(start.x,start.y);
   start = null;
   end = null;
+  middle = null;
   $("#"+playerTurn+"Counter span").remove();
   $("#"+playerTurn+"Counter").toggleClass("dark");
+  $("#"+playerTurn+"Caret").toggleClass("dark");
   if(playerTurn=="red"){
     playerTurn = "black";
   } else{
     playerTurn = "red";
   }
   $(".header span").text(playerTurn+"'s turn!");
-  // $("#"+playerTurn+"Counter").append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
   $("#"+playerTurn+"Counter").toggleClass("dark");
   $("#"+playerTurn+"Caret").toggleClass("dark");
 }
@@ -152,11 +206,14 @@ function movePiece(){
 }
 
 function setBoard(){
+  redScore = 0;
+  blackScore = 0;
+  $("#redCounter").text("0");
+  $("#blackCounter").text("0");
   playerTurn = players[Math.round(Math.random())];
   $(".header span").text(playerTurn+"'s turn!");
   $("#"+playerTurn+"Counter").toggleClass("dark");
   $("#"+playerTurn+"Caret").toggleClass("dark");
-  // $("#"+playerTurn+"Counter").append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
       for(x=1; x<checkersArray[y].length; x+=2){
