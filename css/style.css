@@ -2,6 +2,7 @@ body{
   background-image: url("../img/checkers-texture-game.png");
   color: white;
   text-align: center;
+  min-width: 440px;
 }
 
 .container{
@@ -9,6 +10,7 @@ body{
   margin-top: 1vh;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 3vh;
+  min-width: 440px;
 }
 
 .row{
@@ -23,6 +25,11 @@ button{
   width: 100%;
 }
 
+input{
+  position: relative;
+  top: -0.3vh;
+}
+
 #playersSection, #redSection, #buttonsSection, #counterSection{
   margin-bottom: 3vh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -31,10 +38,17 @@ button{
   display: flex;
   align-items: center;
   justify-content: space-around;
+  font-size: 3vh;
+}
+
+#buttonsSection{
+  background-color: rgba(0,0,0,0);
 }
 
 .header{
   height: 6vh;
+  min-height: 25px;
+  min-width: 440px;
   width: 117vh;
   line-height: 6vh;
   font-size: 5vh;
@@ -51,12 +65,16 @@ button{
   background-image: url("../img/checkers-board.jpg");
   background-size: cover;
   margin-left: 2vh;
+  min-height: 350px;
+  min-width: 350px;
 }
 
 
 .tile{
   width: 10vh;
   height: 10vh;
+  min-height: 40px;
+  min-width: 40px;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -98,6 +116,8 @@ img{
   width: 31vh;
   color: white;
   padding: 2vh;
+  min-height: 44px;
+  min-width: 130px;
 }
 
 #redCounter, #blackCounter{
@@ -141,6 +161,8 @@ img{
 
 .footer{
   height: 6vh;
+  min-height: 25px;
+  min-width: 440px;
   width: 117vh;
   line-height: 6vh;
 }
