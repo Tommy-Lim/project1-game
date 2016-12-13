@@ -8,9 +8,13 @@ body{
   width: 118vh;
 }
 
+.row{
+
+}
+
 .header{
   height: 8vh;
-  background-color: black;
+  border: 1px solid red;
 }
 
 .board-container{
@@ -56,12 +60,17 @@ body{
   background-image: url("../img/checkers-checker-red-king.svg");
 }
 
+img{
+  height: 100%;
+}
+
 .aside{
   height: 84vh;
-  background-color: yellow;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
 }
 
 .footer{
   height: 8vh;
-  background-color: black;
+  border: 1px solid red;
 }
