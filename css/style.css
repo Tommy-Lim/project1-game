@@ -1,20 +1,43 @@
 body{
   background-image: url("../img/checkers-texture-game.png");
-
+  color: white;
+  text-align: center;
 }
 
 .container{
-  border: 1px solid red;
-  width: 118vh;
+  width: 117vh;
+  margin-top: 1vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3vh;
 }
 
 .row{
 
 }
 
+label{
+  margin: 0vh 0.5vh;
+}
+button{
+  margin: 0vh 0.5vh;
+}
+
+#playersSection, #redSection, #buttonsSection, #counterSection{
+  margin-bottom: 3vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1vh;
+  border-radius: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .header{
-  height: 8vh;
-  border: 1px solid red;
+  height: 6vh;
+  width: 117vh;
+  line-height: 6vh;
+  font-size: 5vh;
+  margin: 1vh;
 }
 
 .board-container{
@@ -25,6 +48,7 @@ body{
   justify-content: center;;
   background-image: url("../img/checkers-board.jpg");
   background-size: cover;
+  margin-left: 2vh;
 }
 
 
@@ -66,11 +90,49 @@ img{
 
 .aside{
   height: 84vh;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 31vh;
   color: white;
+  padding: 2vh;
+}
+
+#redCounter{
+  height: 7vh;
+  width: 7vh;
+  background-image: url("../img/checkers-checker-red.svg");
+  background-size: cover;
+  display: inline-block;
+}
+
+#blackCounter{
+  height: 7vh;
+  width: 7vh;
+  background-image: url("../img/checkers-checker-black.svg");
+  background-size: cover;
+  display: inline-block;
+}
+
+#toggles{
+  height: 7vh;
+  width: 1vh;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.dark{
+  opacity: 0.2;
+}
+
+#counterSection{
+  height: 10vh;
+  line-height: 4vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .footer{
-  height: 8vh;
-  border: 1px solid red;
+  height: 6vh;
+  width: 117vh;
+  line-height: 6vh;
 }

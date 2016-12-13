@@ -106,8 +106,7 @@ function isDiagonal(x,y){
     currentDirection = -1;
   }
   console.log("currentDirection: "+currentDirection);
-
-  if(x-start.x==1||x-start.x==-1&&y-start.y==currentDirection){
+  if((x-start.x==1||x-start.x==-1)&&y-start.y==currentDirection){
     console.log("the square is diagonal");
     return true;
   }else {
@@ -126,25 +125,38 @@ function redIsTop(){
   }
 }
 
+function switchTurns(){
+  resetTile(start.x,start.y);
+  start = null;
+  end = null;
+  $("#"+playerTurn+"Counter span").remove();
+  $("#"+playerTurn+"Counter").toggleClass("dark");
+  if(playerTurn=="red"){
+    playerTurn = "black";
+  } else{
+    playerTurn = "red";
+  }
+  $(".header span").text(playerTurn+"'s turn!");
+  // $("#"+playerTurn+"Counter").append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
+  $("#"+playerTurn+"Counter").toggleClass("dark");
+  $("#"+playerTurn+"Caret").toggleClass("dark");
+}
+
 function movePiece(){
   $("#tile-"+start.x+"-"+start.y+" span").remove();
   $("#tile-"+end.x+"-"+end.y).addClass(playerTurn);
   checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
   checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
   checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
-  resetTile(start.x,start.y);
-  start = null;
-  end = null;
-  if(playerTurn=="red"){
-    playerTurn = "black";
-  } else{
-    playerTurn = "red";
-  }
+  switchTurns();
 }
 
 function setBoard(){
   playerTurn = players[Math.round(Math.random())];
-  console.log("player is: "+playerTurn);
+  $(".header span").text(playerTurn+"'s turn!");
+  $("#"+playerTurn+"Counter").toggleClass("dark");
+  $("#"+playerTurn+"Caret").toggleClass("dark");
+  // $("#"+playerTurn+"Counter").append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
       for(x=1; x<checkersArray[y].length; x+=2){
