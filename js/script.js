@@ -57,10 +57,18 @@ function isPlayers(x,y){
 }
 
 function isOpponents(x,y){
-  if(checkersArray[x][y].color != playerTurn){
+  if(checkersArray[x][y].color == switchColor(playerTurn)){
     return true;
   } else{
     return false;
+  }
+}
+
+function switchColor(color){
+  if(color=="red"){
+    return "black";
+  } else if(color=="black"){
+    return "red";
   }
 }
 
@@ -76,22 +84,9 @@ function addCheckerClass(color, x, y){
   checkersArray[x][y].color = color;
 }
 
-function addKingClass(x, y){
-  $("#tile-"+x+"-"+y).addClass("king");
-  checkersArray[x][y].king = true;
-}
-
 function addSideClass(playerSide, x, y){
-    $("#tile-"+x+"-"+y).addClass(playerSide);
-    checkersArray[x][y].side = playerSide;
-}
-
-function availableSpacesRegular(playerSide){
-  //available options takes in are you top or bottom -
-}
-
-function availableSpacesKing(){
-
+  $("#tile-"+x+"-"+y).addClass(playerSide);
+  checkersArray[x][y].side = playerSide;
 }
 
 function setStartCoordinates(x,y){
@@ -121,6 +116,14 @@ function setMiddleCoordinates(x,y){
   };
 }
 
+function calcMiddle(p1,p2){
+  if((p2-p1)>0){
+    return p2-1;
+  } else{
+    return p2+1;
+  }
+}
+
 function isDiagonal(x,y){
   if(checkersArray[start.x][start.y].side=="top"){
     currentDirection = 1;
@@ -128,45 +131,56 @@ function isDiagonal(x,y){
     currentDirection = -1;
   }
 
-  console.log("currentDirection: "+currentDirection);
-  if((x-start.x==1||x-start.x==-1)&&y-start.y==currentDirection){
+  var dx = x-start.x;
+  var dy = y-start.y;
+
+  if((dx==1||dx==-1)&&dy==currentDirection){
     console.log("the square is diagonal one");
     return true;
-  }else {
+  }else if(checkersArray[start.x][start.y].king&&((dx==1||dx==-1)&&(dy==1||dy==-1))){
+    console.log("the square is diagonal one for king");
+    return true;
+  } else{
     console.log("the square is not diagonal");
   }
 
-  console.log("currentDirection: "+currentDirection);
-  if((x-start.x==2||x-start.x==-2)&&y-start.y==currentDirection*2){
-    console.log("the square is diagonal two");
-      if(start.x-x==2){
-        console.log("attempt jump left");
-        setMiddleCoordinates(start.x-1,start.y+currentDirection);
-        if(isOpponents(middle.x,middle.y)){
-          console.log("jump opponent left");
-          countScore();
-          resetTile(middle.x,middle.y);
-          return true;
-        }
-      } else if(start.x-x==-2){
-        console.log("jump right");
-        setMiddleCoordinates(start.x+1,start.y+currentDirection);
-        if(isOpponents(middle.x,middle.y)){
-          console.log("jump opponent right");
-          countScore();
-          resetTile(middle.x,middle.y);
-          return true;
-        }
+  if(checkersArray[start.x][start.y].king){
+
+    if((dx==2||dx==-2)&&(dy==-2||dy==2)){
+
+      //code for if a king
+      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
+      if(isOpponents(middle.x,middle.y)){
+        console.log("jump opponent left");
+        countScore();
+        resetTile(middle.x,middle.y);
+        return true;
+      }else{
+        //do nothing because nothing to jump
       }
 
+    }else{
+      console.log("the square is not diagonal");
+    }
 
-
-    return true;
   }else {
-    console.log("the square is not diagonal");
+
+    //code for if not a king
+    if((dx==2||dx==-2)&&dy==currentDirection*2){
+      console.log("the square is diagonal two");
+      setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
+      if(isOpponents(middle.x,middle.y)){
+        console.log("jump opponent left");
+        countScore();
+        resetTile(middle.x,middle.y);
+        return true;
+      }
+    }else {
+      console.log("the square is not diagonal");
+    }
+
   }
 }
-
 
 function redIsTop(){
   if($("#top-side")[0].checked){
@@ -175,6 +189,19 @@ function redIsTop(){
   } else{
     playerTop = "black";
     playerBottom = "red";
+  }
+}
+
+function addKingClass(x, y){
+  $("#tile-"+x+"-"+y).removeClass(playerTurn);
+  $("#tile-"+x+"-"+y).addClass(playerTurn+"-king");
+}
+
+function isKing(x,y){
+  if((checkersArray[x][y].side=="top"&&y==7)||(checkersArray[x][y].side=="bottom"&&y===0)||(checkersArray[start.x][start.y].king===true)){
+    checkersArray[x][y].king = true;
+    addKingClass(x,y);
+    return true;
   }
 }
 
@@ -202,6 +229,7 @@ function movePiece(){
   checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
   checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
   checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
+  isKing(end.x,end.y);
   switchTurns();
 }
 
@@ -263,9 +291,6 @@ $(".tile").click(function(event){
         setStartCoordinates(currentX,currentY);
         console.log("reset start");
       }
-      // } else if(){
-      //   //is opponent, then check next position
-      // }
     } else{
       console.log("start not set, set start");
       if(isPlayers(currentX,currentY)){
