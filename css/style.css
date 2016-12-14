@@ -17,6 +17,19 @@ body{
 
 }
 
+.overlay{
+  position: absolute;
+  top: 15vh;
+  left: 15vw;
+  width: 70vw;
+  height: 70vh;
+  line-height: 70vh;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 1;
+  font-size: 13vh;
+  border-radius: 4vh;
+}
+
 label{
   margin: 0vh 0.5vh;
 }
@@ -118,6 +131,7 @@ img{
   padding: 2vh;
   min-height: 44px;
   min-width: 130px;
+  /*background-image: url("../img/checkers-texture-web.png");*/
 }
 
 #redCounter, #blackCounter{
