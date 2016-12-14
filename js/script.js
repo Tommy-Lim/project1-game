@@ -94,10 +94,6 @@ function switchColor(color){
   }
 }
 
-function areMoreJumps(){
-
-}
-
 function resetTile(x,y){
   $("#tile-"+x+"-"+y).removeClass("black").removeClass("red").removeClass("black-king").removeClass("red-king").removeClass("top").removeClass("bottom");
   checkersArray[x][y].color = "";
@@ -171,18 +167,17 @@ function redIsTop(){
 function addKingClass(x, y){
   $("#tile-"+x+"-"+y).removeClass(playerTurn);
   $("#tile-"+x+"-"+y).addClass(playerTurn+"-king");
+  checkersArray[x][y].king = true;
 }
 
 function isKing(x,y){
   if((checkersArray[x][y].side=="top"&&y==7)||(checkersArray[x][y].side=="bottom"&&y===0)||(checkersArray[start.x][start.y].king===true)){
-    checkersArray[x][y].king = true;
     addKingClass(x,y);
     return true;
   }
 }
 
 function switchTurns(){
-  resetTile(start.x,start.y);
   start = null;
   end = null;
   middle = null;
@@ -197,7 +192,6 @@ function switchTurns(){
   $(".header span").text(playerTurn+"'s turn!");
   $("#"+playerTurn+"Counter").toggleClass("dark");
   $("#"+playerTurn+"Caret").toggleClass("dark");
-  isGameOver();
 }
 
 function movePiece(){
@@ -207,7 +201,6 @@ function movePiece(){
   checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
   checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
   isKing(end.x,end.y);
-  switchTurns();
 }
 
 function setBoard(){
@@ -265,17 +258,58 @@ function isDiagonal(x,y){
     return true;
   } else{
   }
+}
 
+function areMoreJumps(){
+  assignDirection();
+
+  start.x = end.x;
+  start.y = end.y;
+
+  var i=0;
+  var j=0;
+
+  if(checkersArray[end.x][end.y].king){
+    //conditions for if king:
+    for(i=-2; i<3; i++){
+      for(j=-2; j<3; j++){
+        if(i===0||j===0){
+          //skip zero position reference
+        } else{
+          if(isOpponents(start.x+i,start.y+j)&&isOpponents(start.x+2*i,start.y+2*j)){
+            console.log("another jump available for king to x:"+i+"and y:"+j);
+          }
+        }
+      }
+    }
+  }else{
+    //conditions for if not king:
+    for(i=-2; i<3; i++){
+      if(i===0||j===0){
+        //skip zero position reference
+      } else{
+        if(isOpponents(start.x+i,start.y+currentDirection)&&isOpponents(start.x+2*i,start.y+2*currentDirection)){
+          console.log("another jump available for regular checker to x:"+i+"and y:"+currentDirection);
+        }
+      }
+    }
+  }
+}
+
+function isJump(x,y){
+  assignDirection();
+
+  var dx = x-start.x;
+  var dy = y-start.y;
 
   if(checkersArray[start.x][start.y].king){
     //code for if a king
     if((dx==2||dx==-2)&&(dy==-2||dy==2)){
       setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
       if(isOpponents(middle.x,middle.y)){
-        countScore();
-        resetTile(middle.x,middle.y);
         return true;
       }else{
+        middle = null;
         //do nothing because nothing to jump
       }
     }else{
@@ -286,8 +320,6 @@ function isDiagonal(x,y){
     if((dx==2||dx==-2)&&dy==currentDirection*2){
       setMiddleCoordinates(calcMiddle(start.x,x),calcMiddle(start.y,y));
       if(isOpponents(middle.x,middle.y)){
-        countScore();
-        resetTile(middle.x,middle.y);
         return true;
       }
     }else {
@@ -300,18 +332,32 @@ $(".tile").click(function(event){
   if(playerTurn!="Paused"){
     var currentX = parseInt(event.currentTarget.id.split("-")[1],10);
     var currentY = parseInt(event.currentTarget.id.split("-")[2],10);
+    console.log(currentX,currentY);
     if(start){
       if(isEmpty(currentX,currentY)){
         if(isDiagonal(currentX,currentY)){
           setEndCoordinates(currentX,currentY);
           movePiece();
-        } else{
+          resetTile(start.x,start.y);
+          switchTurns();
+          isGameOver();
+        } else if(isJump(currentX,currentY)){
+          countScore();
+          resetTile(middle.x,middle.y);
+          setEndCoordinates(currentX,currentY);
+          movePiece();
+          // areMoreJumps();
+          resetTile(start.x,start.y);
+          switchTurns();
+          isGameOver();
+        }
+        else{
         }
       } else if(isPlayers(currentX,currentY)){
         $("#tile-"+start.x+"-"+start.y+" span").remove();
         setStartCoordinates(currentX,currentY);
       }
-    } else{
+    }else{
       if(isPlayers(currentX,currentY)){
         setStartCoordinates(currentX,currentY);
       } else{
