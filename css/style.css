@@ -1,41 +1,57 @@
 body{
-  background-image: url("../img/checkers-texture-game.png");
+  background-image: url("../img/table4.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
   text-align: center;
   min-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container{
-  width: 117vh;
-  margin-top: 1vh;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 90vh;
+  margin: 5vh 0vh;
+  padding: 2vh;
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 3vh;
   min-width: 440px;
+  /*display: flex;*/
+  /*justify-content: space-around;*/
 }
 
 .row{
-
+  display: flex;
+  justify-content: center;
 }
 
-.overlay{
+#exitSettings{
+  color: rgb(200, 82, 70);
+}
+
+.settings{
   position: absolute;
-  top: 15vh;
-  left: 15vw;
-  width: 70vw;
-  height: 70vh;
-  line-height: 70vh;
+  top: 42.5vh;
+  left: 30vw;
+  width: 40vw;
+  height: 15vh;
   background-color: rgba(0,0,0,0.8);
   z-index: 1;
-  font-size: 13vh;
   border-radius: 4vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 label{
   margin: 0vh 0.5vh;
 }
+
 button{
   margin: 0vh 0.5vh;
-  width: 100%;
+  width: 30%;
 }
 
 input{
@@ -43,19 +59,12 @@ input{
   top: -0.3vh;
 }
 
-#playersSection, #redSection, #buttonsSection, #counterSection{
-  margin-bottom: 3vh;
-  background-color: rgba(0, 0, 0, 0.4);
+#playersSection, #redSection{
   padding: 1vh;
   border-radius: 2vh;
   display: flex;
-  align-items: center;
   justify-content: space-around;
   font-size: 3vh;
-}
-
-#buttonsSection{
-  background-color: rgba(0,0,0,0);
 }
 
 .header{
@@ -70,22 +79,22 @@ input{
 }
 
 .board-container{
-  width: 84vh;
+  width: 76vh;
   padding: 2vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;;
   background-image: url("../img/checkers-board.jpg");
   background-size: cover;
-  margin-left: 2vh;
+  margin: 2vh;
   min-height: 350px;
   min-width: 350px;
 }
 
 
 .tile{
-  width: 10vh;
-  height: 10vh;
+  width: 9vh;
+  height: 9vh;
   min-height: 40px;
   min-width: 40px;
   background-repeat: no-repeat;
@@ -122,16 +131,6 @@ img{
   position: relative;
   top: -6%;
   left: -3%;
-}
-
-.aside{
-  height: 84vh;
-  width: 31vh;
-  color: white;
-  padding: 2vh;
-  min-height: 44px;
-  min-width: 130px;
-  /*background-image: url("../img/checkers-texture-web.png");*/
 }
 
 #redCounter, #blackCounter{
@@ -171,6 +170,10 @@ img{
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+#redCaret, #blackCaret{
+  font-size: 8vh;
 }
 
 .footer{

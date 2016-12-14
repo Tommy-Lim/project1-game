@@ -1,4 +1,5 @@
 console.log("js loaded");
+$(".settings").hide();
 
 // var timer;
 var playerTop;
@@ -79,15 +80,15 @@ function isGameOver(){
 
   if(redCheckers===0){
     $(".header span").text("Black wins!");
-    $(".overlay").text("Black wins!");
-    $(".overlay").toggle("fast");
-    setTimeout(function(){$(".overlay").toggle("fast");},3000);
+    $(".settings").text("Black wins!");
+    $(".settings").toggle("fast");
+    setTimeout(function(){$(".settings").toggle("fast");},3000);
     playerTurn = "Paused";
   } else if(blackCheckers===0){
     $(".header span").text("Red wins!");
-    $(".overlay").text("Black wins!");
-    $(".overlay").toggle("fast");
-    setTimeout(function(){$(".overlay").toggle("fast");},3000);
+    $(".settings").text("Black wins!");
+    $(".settings").toggle("fast");
+    setTimeout(function(){$(".settings").toggle("fast");},3000);
     playerTurn = "Paused";
   }
 }
@@ -198,8 +199,7 @@ function switchTurns(){
   doubleJump = false;
 
   $("#"+playerTurn+"Counter span").remove();
-  $("#"+playerTurn+"Counter").toggleClass("dark");
-  $("#"+playerTurn+"Caret").toggleClass("dark");
+  $("#"+playerTurn+"Caret").addClass("dark");
 
   if(playerTurn=="red"){
     playerTurn = "black";
@@ -208,8 +208,7 @@ function switchTurns(){
   }
 
   $(".header span").text(playerTurn+"'s turn!");
-  $("#"+playerTurn+"Counter").toggleClass("dark");
-  $("#"+playerTurn+"Caret").toggleClass("dark");
+  $("#"+playerTurn+"Caret").removeClass("dark");
 }
 
 function movePiece(){
@@ -237,8 +236,9 @@ function setBoard(){
   $("#redCounter").text("0");
   $("#blackCounter").text("0");
   $(".header span").text(playerTurn+"'s turn!");
-  $("#"+playerTurn+"Counter").toggleClass("dark");
-  $("#"+playerTurn+"Caret").toggleClass("dark");
+  $("#redCaret").addClass("dark");
+  $("#blackCaret").addClass("dark");
+  $("#"+playerTurn+"Caret").removeClass("dark");
 
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
@@ -444,20 +444,23 @@ function blinking(elm) {
            elm.fadeIn(800);
         });
     }
-    $("#start-button").click(function(){
-      clearInterval(timer);
-    });
+    // $("#start-button").click(function(){
+    //   clearInterval(timer);
+    // });
 }
 
 $("#start-button").click(function(){
-  $(".overlay").toggle();
   redIsTop();
   setBoard();
-  setTimeout(function(){
-    $(".overlay").toggle("fast");
-  },1000);
+  // setTimeout(function(){
+  //   $(".settings").toggle("fast");
+  // },1000);
 });
 
-$(".overlay").toggle();
-$(".header span").text("Press new game to play");
-blinking($("#start-button"));
+$("#settings-button").click(function(){
+  $(".settings").show();
+});
+
+$("#exitSettings").click(function(){
+  $(".settings").hide();
+});
