@@ -10,6 +10,7 @@ var end = null;
 var middle = null;
 var redScore = 0;
 var blackScore = 0;
+var doubleJump = false;
 
 var checkersArray = [
   [
@@ -172,8 +173,15 @@ function addKingClass(x, y){
 
 function isKing(x,y){
   if((checkersArray[x][y].side=="top"&&y==7)||(checkersArray[x][y].side=="bottom"&&y===0)||(checkersArray[start.x][start.y].king===true)){
-    addKingClass(x,y);
     return true;
+  }
+}
+
+function checkValid(p1,p2,p3,p4){
+  if(p1>=0&&p2>=0&&p3>=0&&p4>=0&&p1<=7&&p2<=7&&p3<=7&&p4<=7){
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -181,6 +189,7 @@ function switchTurns(){
   start = null;
   end = null;
   middle = null;
+  doubleJump = false;
   $("#"+playerTurn+"Counter span").remove();
   $("#"+playerTurn+"Counter").toggleClass("dark");
   $("#"+playerTurn+"Caret").toggleClass("dark");
@@ -200,7 +209,9 @@ function movePiece(){
   checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
   checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
   checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
-  isKing(end.x,end.y);
+  if(isKing(end.x,end.y)){
+    addKingClass(end.x,end.y);
+  }
 }
 
 function setBoard(){
@@ -260,37 +271,62 @@ function isDiagonal(x,y){
   }
 }
 
-function areMoreJumps(){
-  assignDirection();
+function areMoreJumps(x,y){
+  debugger;
 
-  start.x = end.x;
-  start.y = end.y;
+  start.x = x;
+  start.y = y;
+
+  assignDirection();
 
   var i=0;
   var j=0;
 
-  if(checkersArray[end.x][end.y].king){
+  if(checkersArray[start.x][start.y].king){
     //conditions for if king:
-    for(i=-2; i<3; i++){
-      for(j=-2; j<3; j++){
-        if(i===0||j===0){
-          //skip zero position reference
-        } else{
-          if(isOpponents(start.x+i,start.y+j)&&isOpponents(start.x+2*i,start.y+2*j)){
+    for(i=-1; i<2; i+=2){
+      for(j=-1; j<2; j+=2){
+        middle.x = start.x+i;
+        middle.y = start.y+j;
+        end.x = start.x+2*i;
+        end.y = start.y+2*j;
+        if(checkValid(middle.x,middle.y,end.x,end.y)){
+          if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
             console.log("another jump available for king to x:"+i+"and y:"+j);
+            $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
+            $(".header span").text(playerTurn+"'s turn - Jump again!");
+            doubleJump = true;
+            return true;
+          } else{
+            doubleJump = false;
+            console.log("another jump not available for a king");
           }
+        }else{
+          //do nothing because coordinates off grid
         }
+
       }
     }
   }else{
     //conditions for if not king:
-    for(i=-2; i<3; i++){
-      if(i===0||j===0){
-        //skip zero position reference
-      } else{
-        if(isOpponents(start.x+i,start.y+currentDirection)&&isOpponents(start.x+2*i,start.y+2*currentDirection)){
+    for(i=-1; i<2; i+=2){
+      middle.x = start.x+i;
+      middle.y = start.y+currentDirection;
+      end.x = start.x+2*i;
+      end.y = start.y+2*currentDirection;
+      if(checkValid(middle.x,middle.y,end.x,end.y)){
+        if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
           console.log("another jump available for regular checker to x:"+i+"and y:"+currentDirection);
+          $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
+          $(".header span").text(playerTurn+"'s turn - Jump again!");
+          doubleJump = true;
+          return true;
+        } else{
+          doubleJump = false;
+          console.log("another jump not available for a regular checker");
         }
+      }else{
+        //do nothing because coordinates off grid
       }
     }
   }
@@ -335,7 +371,7 @@ $(".tile").click(function(event){
     console.log(currentX,currentY);
     if(start){
       if(isEmpty(currentX,currentY)){
-        if(isDiagonal(currentX,currentY)){
+        if(isDiagonal(currentX,currentY)&&!doubleJump){
           setEndCoordinates(currentX,currentY);
           movePiece();
           resetTile(start.x,start.y);
@@ -346,14 +382,17 @@ $(".tile").click(function(event){
           resetTile(middle.x,middle.y);
           setEndCoordinates(currentX,currentY);
           movePiece();
-          // areMoreJumps();
           resetTile(start.x,start.y);
-          switchTurns();
+          if(areMoreJumps(currentX,currentY)){
+            //wait for next jump;
+          }else{
+            switchTurns();
+          }
           isGameOver();
         }
         else{
         }
-      } else if(isPlayers(currentX,currentY)){
+      } else if(isPlayers(currentX,currentY)&&!doubleJump){
         $("#tile-"+start.x+"-"+start.y+" span").remove();
         setStartCoordinates(currentX,currentY);
       }
