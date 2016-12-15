@@ -1,7 +1,6 @@
-console.log("js loaded");
 $(".settings").hide();
+$(".winnerOverlay").hide();
 
-// var timer;
 var playerTop;
 var playerBottom;
 var currentDirection;
@@ -64,6 +63,13 @@ function isOpponents(x,y){
   }
 }
 
+function displayWinner(){
+  $(".winnerOverlay").text(switchColor(playerTurn)+" wins!");
+  $(".winnerOverlay").show();
+  setTimeout(function(){$(".winnerOverlay").hide();},3000);
+  playerTurn = "Paused";
+}
+
 function isGameOver(){
   var redCheckers = 0;
   var blackCheckers = 0;
@@ -78,18 +84,8 @@ function isGameOver(){
     }
   }
 
-  if(redCheckers===0){
-    $(".header span").text("Black wins!");
-    $(".settings").text("Black wins!");
-    $(".settings").toggle("fast");
-    setTimeout(function(){$(".settings").toggle("fast");},3000);
-    playerTurn = "Paused";
-  } else if(blackCheckers===0){
-    $(".header span").text("Red wins!");
-    $(".settings").text("Black wins!");
-    $(".settings").toggle("fast");
-    setTimeout(function(){$(".settings").toggle("fast");},3000);
-    playerTurn = "Paused";
+  if(redCheckers===0||blackCheckers===0){
+    displayWinner();
   }
 }
 
@@ -124,7 +120,7 @@ function setStartCoordinates(x,y){
     y: y
   };
 
-  $("#tile-"+x+"-"+y).append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
+  $("#tile-"+x+"-"+y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
 }
 
 function setEndCoordinates(x,y){
@@ -207,7 +203,6 @@ function switchTurns(){
     playerTurn = "red";
   }
 
-  $(".header span").text(playerTurn+"'s turn!");
   $("#"+playerTurn+"Caret").removeClass("dark");
 }
 
@@ -225,7 +220,9 @@ function movePiece(){
 }
 
 function setBoard(){
-
+  if(start!==null){
+    $("#tile-"+start.x+"-"+start.y+" span").remove();
+  }
   redScore = 0;
   blackScore = 0;
   start = null;
@@ -235,7 +232,6 @@ function setBoard(){
 
   $("#redCounter").text("0");
   $("#blackCounter").text("0");
-  $(".header span").text(playerTurn+"'s turn!");
   $("#redCaret").addClass("dark");
   $("#blackCaret").addClass("dark");
   $("#"+playerTurn+"Caret").removeClass("dark");
@@ -308,8 +304,7 @@ function areMoreJumps(x,y){
 
           if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
             console.log("another jump available for king to x:"+i+"and y:"+j);
-            $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
-            $(".header span").text(playerTurn+"'s turn - Jump again!");
+            $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
             doubleJump = true;
             return true;
           } else{
@@ -336,8 +331,7 @@ function areMoreJumps(x,y){
 
         if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
           console.log("another jump available for regular checker to x:"+i+"and y:"+currentDirection);
-          $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-yellow.svg' /></span>");
-          $(".header span").text(playerTurn+"'s turn - Jump again!");
+          $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
           doubleJump = true;
           return true;
         } else{
@@ -437,30 +431,15 @@ $(".tile").click(function(event){
   }
 });
 
-function blinking(elm) {
-    timer = setInterval(blink, 500);
-    function blink() {
-        elm.fadeOut(800, function() {
-           elm.fadeIn(800);
-        });
-    }
-    // $("#start-button").click(function(){
-    //   clearInterval(timer);
-    // });
-}
-
 $("#start-button").click(function(){
   redIsTop();
   setBoard();
-  // setTimeout(function(){
-  //   $(".settings").toggle("fast");
-  // },1000);
 });
 
 $("#settings-button").click(function(){
-  $(".settings").show();
+  $(".settings").toggle();
 });
 
 $("#exitSettings").click(function(){
-  $(".settings").hide();
+  $(".settings").toggle();
 });
