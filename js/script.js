@@ -1,5 +1,5 @@
 $(".settings").hide();
-$(".winnerOverlay").hide();
+$(".overlay").hide();
 
 var playerTop;
 var playerBottom;
@@ -11,6 +11,8 @@ var end = null;
 var middle = null;
 var redScore = 0;
 var blackScore = 0;
+var redWins = 0;
+var blackWins = 0;
 var doubleJump = false;
 var checkersArray = [
   [
@@ -64,16 +66,32 @@ function isOpponents(x,y){
 }
 
 function displayWinner(){
-  $(".winnerOverlay").text(switchColor(playerTurn)+" wins!");
-  $(".winnerOverlay").show();
-  setTimeout(function(){$(".winnerOverlay").hide();},3000);
+  //switch color because switch turn has already run
+  playerTurn = switchColor(playerTurn);
+  window[playerTurn+"Wins"]++;
+  $("#"+playerTurn+"WinsCounter").text(window[playerTurn+"Wins"]);
+  if($("#messagesYes")[0].checked){
+    $(".overlay").text(playerTurn+" wins!");
+    $(".overlay").show();
+    setTimeout(function(){$(".overlay").hide();},3000);
+  }
   playerTurn = "Paused";
 }
 
 function displayWhosTurn(){
-  $(".winnerOverlay").text(playerTurn+"'s turn!");
-  $(".winnerOverlay").show();
-  setTimeout(function(){$(".winnerOverlay").hide();},1000);
+  if($("#messagesYes")[0].checked){
+    $(".overlay").text(playerTurn+"'s turn!");
+    $(".overlay").show();
+    setTimeout(function(){$(".overlay").hide();},1000);
+  }
+}
+
+function displayJumpAgain(){
+  if($("#messagesYes")[0].checked){
+    $(".overlay").text("Jump again, "+playerTurn+"!");
+    $(".overlay").show();
+    setTimeout(function(){$(".overlay").hide();},2000);
+  }
 }
 
 function isGameOver(){
@@ -310,7 +328,7 @@ function areMoreJumps(x,y){
         if(checkValid(middle.x,middle.y,end.x,end.y)){
 
           if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
-            console.log("another jump available for king to x:"+i+"and y:"+j);
+            displayJumpAgain();
             $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
             doubleJump = true;
             return true;
@@ -337,7 +355,7 @@ function areMoreJumps(x,y){
       if(checkValid(middle.x,middle.y,end.x,end.y)){
 
         if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
-          console.log("another jump available for regular checker to x:"+i+"and y:"+currentDirection);
+          displayJumpAgain();
           $("#tile-"+start.x+"-"+start.y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
           doubleJump = true;
           return true;
@@ -403,7 +421,9 @@ $(".tile").click(function(event){
           movePiece();
           resetTile(start.x,start.y);
           switchTurns();
-          isGameOver();
+          if(isGameOver()){
+            displayWinner();
+          }
         } else if(isJump(currentX,currentY)){
           countScore();
           resetTile(middle.x,middle.y);
@@ -415,7 +435,9 @@ $(".tile").click(function(event){
           }else{
             switchTurns();
           }
-          isGameOver();
+          if(isGameOver()){
+            displayWinner();
+          }
         }else{
         }
 
@@ -449,4 +471,8 @@ $("#settings-button").click(function(){
 
 $("#exitSettings").click(function(){
   $(".settings").toggle();
+});
+
+$(".overlay").click(function(){
+  $(".overlay").hide();
 });

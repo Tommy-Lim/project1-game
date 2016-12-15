@@ -25,33 +25,41 @@ body{
 
 #exitSettings{
   color: rgb(200, 82, 70);
-  align-self: flex-end;
+  font-size: 4vh;
+  cursor: pointer;
+}
+
+.exitDiv{
+  display: flex;
+  justify-content: flex-end;
   position: relative;
-  top: -1vh;
-  right: 2vh;
-  line-height: 0;
-  font-size: 3vh;
+  margin: -1vh -1vh 0 -1vh;
+  padding: 1vh 3vh;
+  border-radius: 4vh 4vh 0 0;
+  background-color: rgba(0,0,0,0.5);
 }
 
 .settings{
   position: absolute;
-  top: 30vh;
+  top: 35vh;
   left: 30vw;
   width: 40vw;
-  height: 20vh;
   background-color: rgba(0,0,0,0.8);
   z-index: 1;
   border-radius: 4vh;
-  display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
+  padding: 1vh;
 }
 
 label{
   margin: 0vh 0.5vh;
   width: 20vh;
+  font-weight: normal;
+  cursor: pointer;
 }
-#playersSection span, #redSection span{
+
+#playersSection span, #redSection span, #displaySection span{
   width: 20vh;
 }
 
@@ -65,9 +73,12 @@ button{
 }
 
 #start-button{
-  /*background-color: rgb(242, 87, 71);*/
   background: linear-gradient(rgb(255, 100, 90),rgb(200, 50, 40));
   border-color: rgb(200, 50, 40);
+}
+
+#start-button:hover{
+  color: black;
 }
 
 #settings-button{
@@ -87,15 +98,16 @@ input{
   top: -0.3vh;
 }
 
-#playersSection, #redSection{
+#playersSection, #redSection, #displaySection{
   padding: 1vh;
   border-radius: 2vh;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   font-size: 3vh;
 }
 
-.winnerOverlay{
+.overlay{
   background-color: rgba(0, 0, 0, 0.8);
   width: 40vw;
   height: 40vh;
@@ -135,6 +147,7 @@ input{
   min-width: 40px;
   background-repeat: no-repeat;
   background-size: cover;
+  cursor: pointer;
 }
 
 .tile:hover{
@@ -206,13 +219,32 @@ img{
   opacity: 0.2;
 }
 
+#left-nav{
+  width: 50%;
+  position: relative;
+  top: -1vh;
+}
+
 #counterSection{
   height: 10vh;
-  width: 40%;
   line-height: 4vh;
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+#winsSection{
+  line-height: 0;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  top: 0.5vh;
+  font-size: 2vh;
+}
+
+#winsSection span{
+  width: 33%;
+  text-align: center;
 }
 
 #redCaret, #blackCaret{
