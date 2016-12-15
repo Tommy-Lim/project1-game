@@ -110,6 +110,7 @@ input{
   font-size: 10vh;
   padding: 3vh;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .board-container{

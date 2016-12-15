@@ -70,6 +70,12 @@ function displayWinner(){
   playerTurn = "Paused";
 }
 
+function displayWhosTurn(){
+  $(".winnerOverlay").text(playerTurn+"'s turn!");
+  $(".winnerOverlay").show();
+  setTimeout(function(){$(".winnerOverlay").hide();},1000);
+}
+
 function isGameOver(){
   var redCheckers = 0;
   var blackCheckers = 0;
@@ -235,6 +241,7 @@ function setBoard(){
   $("#redCaret").addClass("dark");
   $("#blackCaret").addClass("dark");
   $("#"+playerTurn+"Caret").removeClass("dark");
+  // displayWhosTurn();
 
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
