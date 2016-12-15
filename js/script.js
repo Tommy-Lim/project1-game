@@ -241,7 +241,7 @@ function setBoard(){
   $("#redCaret").addClass("dark");
   $("#blackCaret").addClass("dark");
   $("#"+playerTurn+"Caret").removeClass("dark");
-  // displayWhosTurn();
+  displayWhosTurn();
 
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
