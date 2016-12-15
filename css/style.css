@@ -4,8 +4,6 @@ body{
   background-position: center;
   background-repeat: no-repeat;
   color: white;
-  text-align: center;
-  min-width: 440px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,6 +25,12 @@ body{
 
 #exitSettings{
   color: rgb(200, 82, 70);
+  align-self: flex-end;
+  position: relative;
+  top: -1vh;
+  right: 2vh;
+  line-height: 0;
+  font-size: 3vh;
 }
 
 .settings{
@@ -45,6 +49,10 @@ body{
 
 label{
   margin: 0vh 0.5vh;
+  width: 20vh;
+}
+#playersSection span, #redSection span{
+  width: 20vh;
 }
 
 button{
