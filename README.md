@@ -16,6 +16,14 @@ Settings:
 - "Red Side" settings allow players to decide which color is on the "top" of the board.
 - "Display Tips" settings allow players to show or hide gameplay tips.  Experienced users may better enjoy the game without these tips.
 
+
+Thought process:
+
+Technologies:
+
+Additional features:
+
+
 Requirements:
 
 1. Game is playable

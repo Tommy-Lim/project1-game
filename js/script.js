@@ -109,7 +109,7 @@ function isGameOver(){
   }
 
   if(redCheckers===0||blackCheckers===0){
-    displayWinner();
+    return true;
   }
 }
 
@@ -138,6 +138,18 @@ function addSideClass(playerSide, x, y){
   checkersArray[x][y].side = playerSide;
 }
 
+function addKingClass(x, y){
+  $("#tile-"+x+"-"+y).removeClass(playerTurn);
+  $("#tile-"+x+"-"+y).addClass(playerTurn+"-king");
+  checkersArray[x][y].king = true;
+}
+
+function isKing(x,y){
+  if((checkersArray[x][y].side=="top"&&y==7)||(checkersArray[x][y].side=="bottom"&&y===0)||(checkersArray[start.x][start.y].king===true)){
+    return true;
+  }
+}
+
 function setStartCoordinates(x,y){
   start = {
     x: x,
@@ -145,18 +157,6 @@ function setStartCoordinates(x,y){
   };
 
   $("#tile-"+x+"-"+y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
-}
-
-function setEndCoordinates(x,y){
-  end = {
-    x: x,
-    y: y
-  };
-}
-
-function countScore(){
-  this[playerTurn+"Score"] ++;
-  $("#"+playerTurn+"Counter").text(this[playerTurn+"Score"]);
 }
 
 function setMiddleCoordinates(x,y){
@@ -174,6 +174,18 @@ function calcMiddle(p1,p2){
   }
 }
 
+function setEndCoordinates(x,y){
+  end = {
+    x: x,
+    y: y
+  };
+}
+
+function countScore(){
+  this[playerTurn+"Score"] ++;
+  $("#"+playerTurn+"Counter").text(this[playerTurn+"Score"]);
+}
+
 function assignDirection(){
   if(checkersArray[start.x][start.y].side=="top"){
     currentDirection = 1;
@@ -189,18 +201,6 @@ function redIsTop(){
   } else{
     playerTop = "black";
     playerBottom = "red";
-  }
-}
-
-function addKingClass(x, y){
-  $("#tile-"+x+"-"+y).removeClass(playerTurn);
-  $("#tile-"+x+"-"+y).addClass(playerTurn+"-king");
-  checkersArray[x][y].king = true;
-}
-
-function isKing(x,y){
-  if((checkersArray[x][y].side=="top"&&y==7)||(checkersArray[x][y].side=="bottom"&&y===0)||(checkersArray[start.x][start.y].king===true)){
-    return true;
   }
 }
 
@@ -479,3 +479,5 @@ $(".overlay").click(function(){
 
 
 //add a simulation script to automate moves which would demonstrate each type of play as well as winning for presentation
+//split up JS files in a sensible way
+//add win detection for if no moves and one has more pieces jumped
