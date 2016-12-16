@@ -6,8 +6,8 @@ Basic Rules:
 
 1. Player turn will be randomized at start of each game.
 2. Single "jumps" are not forced if available.
-3. Double "jumps" are forced if a single "jump" is made and a second is available.
-4. A "king", which can traverse both directions of the board, is gained when a regular piece crosses the board.
+3. Multi "jumps" are forced if a single "jump" is made and multiple are available.
+4. A "king", which can traverse both directions of the board, will replace a regular piece when the regular piece crosses the board.
 5. Player will win by "jumping" all of the opponents' pieces, or if no moves are available, by having "jumped" the most pieces.
 
 Settings:  
