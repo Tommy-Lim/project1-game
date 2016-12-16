@@ -17,12 +17,14 @@ Settings:
 - "Display Tips" settings allow players to show or hide gameplay tips.  Experienced users may better enjoy the game without these tips.
 
 
-Thought process:
+Thought process: 
 
-Technologies:
+Technologies: HTML, CSS, JS, jQuery, Flex
 
-Additional features:
-
+Additional features desired:
+- Single player AI
+- Automation script for demonstration
+- Button and menu for rules similar to settings
 
 Requirements:
 
