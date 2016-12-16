@@ -476,3 +476,6 @@ $("#exitSettings").click(function(){
 $(".overlay").click(function(){
   $(".overlay").hide();
 });
+
+
+//add a simulation script to automate moves which would demonstrate each type of play as well as winning for presentation

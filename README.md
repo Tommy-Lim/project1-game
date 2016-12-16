@@ -14,7 +14,7 @@ Settings:
 
 - "Players" settings enable playing a friend (2 player) or an AI (1 player).  Currently, only 2 player is available.
 - "Red Side" settings allow players to decide which color is on the "top" of the board.
-- "Display Messages" settings allow players to show or hide gameplay messages.  Experienced users may better enjoy the game without these messages.
+- "Display Tips" settings allow players to show or hide gameplay tips.  Experienced users may better enjoy the game without these tips.
 
 Requirements:
 
