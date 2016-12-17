@@ -27,6 +27,7 @@ body{
   color: rgb(200, 82, 70);
   font-size: 4vh;
   cursor: pointer;
+  z-index: 1;
 }
 
 .exitDiv{
@@ -37,6 +38,7 @@ body{
   padding: 1vh 3vh;
   border-radius: 4vh 4vh 0 0;
   background-color: rgba(0,0,0,0.5);
+  z-index: 1;
 }
 
 .settings{
@@ -57,10 +59,12 @@ label{
   width: 20vh;
   font-weight: normal;
   cursor: pointer;
+  z-index: 1;
 }
 
 #playersSection span, #redSection span, #displaySection span{
   width: 20vh;
+  z-index: 1;
 }
 
 button{
@@ -105,6 +109,7 @@ input{
   justify-content: space-around;
   align-items: center;
   font-size: 3vh;
+  z-index: 1;
 }
 
 .overlay{

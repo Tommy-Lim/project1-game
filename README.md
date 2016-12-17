@@ -16,9 +16,6 @@ Settings:
 - "Red Side" settings allow players to decide which color is on the "top" of the board.
 - "Display Tips" settings allow players to show or hide gameplay tips.  Experienced users may better enjoy the game without these tips.
 
-
-Thought process: 
-
 Technologies: HTML, CSS, JS, jQuery, Flex
 
 Additional features desired:
@@ -48,7 +45,7 @@ Requirements:
 9. Appropriate use of functions
   Functions that are present are named and used logically, and there are few if any missed opportunities for DRYer code by using a function.
 10. DRY Code
-  Little to no repitition (or needless verbosity) in the code
+  Little to no repetition (or needless verbosity) in the code
 11. Draw (Tie) detected (if applicable)
   Applicable for games like tic-tac-toe, connect-four, black jack, or go fish where ties are possible. Not typically applicable for things like platformer games.
 12. Good collision detection/Ease of triggering events

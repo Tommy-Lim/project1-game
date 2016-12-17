@@ -49,7 +49,7 @@ function isEmpty(x,y){
   }
 }
 
-function isPlayers(x,y){
+function isCurrentPlayers(x,y){
   if(checkersArray[x][y].color == playerTurn){
     return true;
   } else{
@@ -66,19 +66,34 @@ function isOpponents(x,y){
 }
 
 function displayWinner(){
-  //switch color because switch turn has already run
-  playerTurn = switchColor(playerTurn);
-  window[playerTurn+"Wins"]++;
   $("#"+playerTurn+"WinsCounter").text(window[playerTurn+"Wins"]);
   if($("#messagesYes")[0].checked){
     $(".overlay").text(playerTurn+" wins!");
     $(".overlay").show();
     setTimeout(function(){$(".overlay").hide();},3000);
   }
-  playerTurn = "Paused";
 }
 
-function displayWhosTurn(){
+function endGame(){
+  playerTurn = "Paused";
+  $("#redCounter").text("");
+  $("#blackCounter").text("");
+  $("#redCaret").addClass("dark");
+  $("#blackCaret").addClass("dark");
+}
+
+function countChecker(){
+  this[playerTurn+"Score"] ++;
+  $("#"+playerTurn+"Counter").text(this[playerTurn+"Score"]);
+}
+
+function countWin(){
+  //switch color because switch turn has already run
+  playerTurn = switchColor(playerTurn);
+  window[playerTurn+"Wins"]++;
+}
+
+function displayWhoseTurn(){
   if($("#messagesYes")[0].checked){
     $(".overlay").text(playerTurn+"'s turn!");
     $(".overlay").show();
@@ -128,7 +143,7 @@ function resetTile(x,y){
   checkersArray[x][y].side = "";
 }
 
-function addCheckerClass(color, x, y){
+function addColorClass(color, x, y){
   $("#tile-"+x+"-"+y).addClass(color);
   checkersArray[x][y].color = color;
 }
@@ -155,7 +170,6 @@ function setStartCoordinates(x,y){
     x: x,
     y: y
   };
-
   $("#tile-"+x+"-"+y).append("<span><img src='./img/checkers-highlight-white.svg' /></span>");
 }
 
@@ -181,11 +195,6 @@ function setEndCoordinates(x,y){
   };
 }
 
-function countScore(){
-  this[playerTurn+"Score"] ++;
-  $("#"+playerTurn+"Counter").text(this[playerTurn+"Score"]);
-}
-
 function assignDirection(){
   if(checkersArray[start.x][start.y].side=="top"){
     currentDirection = 1;
@@ -204,12 +213,21 @@ function redIsTop(){
   }
 }
 
-function checkValid(p1,p2,p3,p4){
-  if(p1>=0&&p2>=0&&p3>=0&&p4>=0&&p1<=7&&p2<=7&&p3<=7&&p4<=7){
+function checkValid(p1){
+  if(p1>=0&&p1<=7){
     return true;
   } else {
     return false;
   }
+}
+
+function movePiece(){
+  $("#tile-"+start.x+"-"+start.y+" span").remove();
+  $("#tile-"+end.x+"-"+end.y).addClass(playerTurn);
+
+  checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
+  checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
+  checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
 }
 
 function switchTurns(){
@@ -221,26 +239,9 @@ function switchTurns(){
   $("#"+playerTurn+"Counter span").remove();
   $("#"+playerTurn+"Caret").addClass("dark");
 
-  if(playerTurn=="red"){
-    playerTurn = "black";
-  } else{
-    playerTurn = "red";
-  }
+  playerTurn = switchColor(playerTurn);
 
   $("#"+playerTurn+"Caret").removeClass("dark");
-}
-
-function movePiece(){
-  $("#tile-"+start.x+"-"+start.y+" span").remove();
-  $("#tile-"+end.x+"-"+end.y).addClass(playerTurn);
-
-  checkersArray[end.x][end.y].color = checkersArray[start.x][start.y].color;
-  checkersArray[end.x][end.y].king = checkersArray[start.x][start.y].king;
-  checkersArray[end.x][end.y].side = checkersArray[start.x][start.y].side;
-
-  if(isKing(end.x,end.y)){
-    addKingClass(end.x,end.y);
-  }
 }
 
 function setBoard(){
@@ -259,17 +260,17 @@ function setBoard(){
   $("#redCaret").addClass("dark");
   $("#blackCaret").addClass("dark");
   $("#"+playerTurn+"Caret").removeClass("dark");
-  displayWhosTurn();
+  displayWhoseTurn();
 
   for(y = 0; y<checkersArray.length; y++){
     if(y%2===0){
       for(x=1; x<checkersArray[y].length; x+=2){
         resetTile(x,y);
         if(y<3){
-          addCheckerClass(playerTop, x, y);
+          addColorClass(playerTop, x, y);
           addSideClass("top",x, y);
         } else if (y>4) {
-          addCheckerClass(playerBottom, x, y);
+          addColorClass(playerBottom, x, y);
           addSideClass("bottom", x, y);
         }
       }
@@ -277,17 +278,16 @@ function setBoard(){
       for(x=0; x<checkersArray[y].length; x+=2){
         resetTile(x,y);
         if(y<3){
-          addCheckerClass(playerTop, x, y);
+          addColorClass(playerTop, x, y);
           addSideClass("top",x, y);
         } else if (y>4) {
-          addCheckerClass(playerBottom, x, y);
+          addColorClass(playerBottom, x, y);
           addSideClass("bottom", x, y);
         }
       }
     }
   }
 }
-
 
 function isDiagonal(x,y){
   assignDirection();
@@ -320,12 +320,17 @@ function areMoreJumps(x,y){
     for(i=-1; i<2; i+=2){
       for(j=-1; j<2; j+=2){
 
-        middle.x = start.x+i;
-        middle.y = start.y+j;
-        end.x = start.x+2*i;
-        end.y = start.y+2*j;
+        middle = {
+          x: start.x+i,
+          y: start.y+j
+        };
 
-        if(checkValid(middle.x,middle.y,end.x,end.y)){
+        end = {
+          x: start.x+2*i,
+          y: start.y+2*j
+        };
+
+        if(checkValid(middle.x)&&checkValid(middle.y)&&checkValid(end.x)&&checkValid(end.y)){
 
           if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
             displayJumpAgain();
@@ -347,12 +352,17 @@ function areMoreJumps(x,y){
     //conditions for if not king:
     for(i=-1; i<2; i+=2){
 
-      middle.x = start.x+i;
-      middle.y = start.y+currentDirection;
-      end.x = start.x+2*i;
-      end.y = start.y+2*currentDirection;
+      middle = {
+        x: start.x+i,
+        y: start.y+currentDirection
+      };
 
-      if(checkValid(middle.x,middle.y,end.x,end.y)){
+      end = {
+        x: start.x+2*i,
+        y: start.y+2*currentDirection
+      };
+
+      if(checkValid(middle.x)&&checkValid(middle.y)&&checkValid(end.x)&&checkValid(end.y)){
 
         if(isOpponents(middle.x,middle.y)&&isEmpty(end.x,end.y)){
           displayJumpAgain();
@@ -419,16 +429,24 @@ $(".tile").click(function(event){
         if(isDiagonal(currentX,currentY)&&!doubleJump){
           setEndCoordinates(currentX,currentY);
           movePiece();
+          if(isKing(end.x,end.y)){
+            addKingClass(end.x,end.y);
+          }
           resetTile(start.x,start.y);
           switchTurns();
           if(isGameOver()){
+            countWin();
             displayWinner();
+            endGame();
           }
         } else if(isJump(currentX,currentY)){
-          countScore();
+          countChecker();
           resetTile(middle.x,middle.y);
           setEndCoordinates(currentX,currentY);
           movePiece();
+          if(isKing(end.x,end.y)){
+            addKingClass(end.x,end.y);
+          }
           resetTile(start.x,start.y);
           if(areMoreJumps(currentX,currentY)){
             //wait for next jump;
@@ -436,19 +454,21 @@ $(".tile").click(function(event){
             switchTurns();
           }
           if(isGameOver()){
+            countWin();
             displayWinner();
+            endGame();
           }
         }else{
         }
 
-      }else if(isPlayers(currentX,currentY)&&!doubleJump){
+      }else if(isCurrentPlayers(currentX,currentY)&&!doubleJump){
         $("#tile-"+start.x+"-"+start.y+" span").remove();
         setStartCoordinates(currentX,currentY);
       }
 
     }else{
 
-      if(isPlayers(currentX,currentY)){
+      if(isCurrentPlayers(currentX,currentY)){
         setStartCoordinates(currentX,currentY);
       } else{
       }
