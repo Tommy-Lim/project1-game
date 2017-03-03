@@ -1,0 +1,45 @@
+.board-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;;
+  background-image: url("../img/checkers-board.jpg");
+  background-size: cover;
+}
+
+.tile{
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.tile:hover{
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.chosen{
+  border: 1px solid green;
+}
+
+.black{
+  background-image: url("../img/checkers-checker-black.svg");
+}
+
+.red{
+  background-image: url("../img/checkers-checker-red.svg");
+}
+
+.black-king{
+  background-image: url("../img/checkers-checker-black-king.svg");
+}
+
+.red-king{
+  background-image: url("../img/checkers-checker-red-king.svg");
+}
+
+img{
+  height: 109%;
+  position: relative;
+  top: -6%;
+  left: -3%;
+}

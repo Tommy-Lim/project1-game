@@ -1,0 +1,108 @@
+#left-nav{
+  font-weight: bold;
+}
+
+.dark{
+  opacity: 0.2;
+}
+
+.nav-row{
+  display: flex;
+  align-items: center;
+}
+
+#counterSection{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#winsSection{
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  font-size: 17px;
+}
+
+#winsSection span{
+  width: 33%;
+  text-align: center;
+}
+
+#redCaret, #blackCaret{
+  font-size: 40px;
+}
+
+
+#redCounter, #blackCounter{
+  background-size: cover;
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+}
+
+#redCounter{
+  background-image: url("../img/checkers-checker-red.svg");
+}
+
+#blackCounter{
+  background-image: url("../img/checkers-checker-black.svg");
+}
+
+#playersSection span, #redSection span, #displaySection span{
+  width: 100px;
+  z-index: 1;
+}
+
+button{
+  margin: 0px 5px;
+  width: 45%;
+}
+
+#settings-button, #start-button{
+  font-size: 18px;
+}
+
+
+#start-button{
+  background: linear-gradient(#F73000 0%, #AE0B00 100%);
+  border: red;
+}
+
+#start-button:hover{
+  background: rgb(255, 20, 20);
+}
+
+#settings-button{
+  background: linear-gradient(lightgrey 0%, grey 100%);
+  border: grey;
+}
+#settings-button:hover{
+  background: rgb(200, 200, 200);
+  color: white;
+}
+
+#buttonsSection{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media (max-width: 700px){
+  #settings-button, #start-button{
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px){
+  .nav-row{
+    display: inherit;
+  }
+  #buttonsSection{
+    margin-top: 1.7vw;
+  }
+}

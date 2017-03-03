@@ -1,5 +1,5 @@
-hello
 body{
+  height: 100vh;
   background-image: url("../img/table4.jpg");
   background-size: cover;
   background-position: center;
@@ -10,257 +10,37 @@ body{
   justify-content: center;
 }
 
-.container{
-  width: 90vh;
-  margin: 1vh 0vh;
-  padding: 2vh;
+.container-fluid{
   background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 3vh;
-  min-width: 440px;
-}
-
-.row{
-  display: flex;
-  justify-content: center;
-}
-
-#exitSettings{
-  color: rgb(200, 82, 70);
-  font-size: 4vh;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.exitDiv{
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  margin: -1vh -1vh 0 -1vh;
-  padding: 1vh 3vh;
-  border-radius: 4vh 4vh 0 0;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 1;
-}
-
-.settings{
-  position: absolute;
-  top: 35vh;
-  left: 30vw;
-  width: 40vw;
-  background-color: rgba(0,0,0,0.8);
-  z-index: 1;
-  border-radius: 4vh;
-  justify-content: space-around;
-  flex-direction: column;
-  padding: 1vh;
-}
-
-label{
-  margin: 0vh 0.5vh;
-  width: 20vh;
-  font-weight: normal;
-  cursor: pointer;
-  z-index: 1;
-}
-
-#playersSection span, #redSection span, #displaySection span{
-  width: 20vh;
-  z-index: 1;
-}
-
-button{
-  margin: 0vh 0.5vh;
-  width: 45%;
-}
-
-#settings-button, #start-button{
-  font-size: 3vh;
-}
-
-#start-button{
-  background: linear-gradient(rgb(255, 100, 90),rgb(200, 50, 40));
-  border-color: rgb(200, 50, 40);
-}
-
-#start-button:hover{
-  color: black;
-}
-
-#settings-button{
-  background: linear-gradient(rgb(200, 200, 200),rgb(150, 150, 150));
-  border-color: rgb(150,150,150);
-}
-
-#buttonsSection{
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-input{
-  position: relative;
-  top: -0.3vh;
-}
-
-#playersSection, #redSection, #displaySection{
-  padding: 1vh;
-  border-radius: 2vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 3vh;
-  z-index: 1;
+  border-radius: 10px;
 }
 
 .overlay{
   background-color: rgba(0, 0, 0, 0.8);
-  width: 40vw;
-  height: 40vh;
+  top: 25%;
+  width: 80%;
+  max-width: 400px;
+  height: 50%;
   position: absolute;
-  top: 30vh;
-  left: 30vw;
   z-index: 1;
-  border-radius: 4vh;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10vh;
-  padding: 3vh;
+  font-size: 82px;
+  padding: 20px;
   text-transform: capitalize;
   text-align: center;
 }
 
-.board-container{
-  width: 84vh;
-  padding: 2vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;;
-  background-image: url("../img/checkers-board.jpg");
-  background-size: cover;
-  margin: 1vh;
-  min-height: 350px;
-  min-width: 350px;
-  border-radius: 1vh;
-}
-
-
-.tile{
-  width: 10vh;
-  height: 10vh;
-  min-height: 40px;
-  min-width: 40px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  cursor: pointer;
-}
-
-.tile:hover{
-  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.chosen{
-  border: 1px solid green;
-}
-
-.black{
-  background-image: url("../img/checkers-checker-black.svg");
-}
-
-.red{
-  background-image: url("../img/checkers-checker-red.svg");
-}
-
-.black-king{
-  background-image: url("../img/checkers-checker-black-king.svg");
-}
-
-.red-king{
-  background-image: url("../img/checkers-checker-red-king.svg");
-}
-
-img{
-  height: 109%;
-  position: relative;
-  top: -6%;
-  left: -3%;
-}
-
-#redCounter, #blackCounter{
-  background-size: cover;
-  display: inline-block;
-  height: 9vh;
-  width: 9vh;
-  line-height: 9vh;
-  text-align: center;
-  color: white;
-  font-size: 4vh;
-}
-
-#redCounter{
-  background-image: url("../img/checkers-checker-red.svg");
-}
-
-#blackCounter{
-  background-image: url("../img/checkers-checker-black.svg");
-}
-
-#toggles{
-  height: 7vh;
-  width: 1vh;
-  display: inline-block;
-  position: relative;
-  top: -0.7vh;
-}
-
-.nav{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.dark{
-  opacity: 0.2;
-}
-
-#left-nav{
-  width: 50%;
-  position: relative;
-  top: -1vh;
-}
-
-#counterSection{
-  height: 10vh;
-  line-height: 4vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#winsSection{
-  line-height: 0;
-  display: flex;
-  justify-content: space-around;
-  position: relative;
-  top: 0.5vh;
-  font-size: 2vh;
-}
-
-#winsSection span{
-  width: 33%;
-  text-align: center;
-}
-
-#redCaret, #blackCaret{
-  font-size: 8vh;
-}
-
 .footer{
-  height: 6vh;
-  min-height: 25px;
-  min-width: 440px;
-  width: 117vh;
-  line-height: 6vh;
+  margin-top: 1.7vh;
+}
+
+.footer a{
+  color: white;
+}
+
+.footer i:hover{
+  transform: scale(1.5);
 }

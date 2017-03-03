@@ -11,13 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <link href="./css/style.css" rel="stylesheet" />
+    <link href="./css/board.css" rel="stylesheet" />
+    <link href="./css/nav.css" rel="stylesheet" />
+    <link href="./css/settings.css" rel="stylesheet" />
   </head>
   <body>
 
@@ -27,7 +24,7 @@
       </div>
       <div id="playersSection">
           <span>Players:</span>
-          <label><input type="radio" name="players"/> 1</label>
+          <label><input type="radio" name="players" disabled/> 1</label>
           <label><input type="radio" name="players" checked/> 2</label>
       </div>
       <div id="redSection">
@@ -46,26 +43,30 @@
 
     </div>
 
-    <div class="container">
-      <div class="nav">
-        <div id="left-nav">
-          <div id="counterSection">
-            <div id="blackCounter">
+    <div class="container-fluid">
+      <div class="row nav-row">
+        <div class="col-sm-6">
+          <div id="left-nav">
+            <div id="counterSection">
+              <div id="blackCounter">
+              </div>
+              <span><i class="fa fa-caret-left fa-lg dark" id="blackCaret" aria-hidden="true"></i></span>
+              <span><i class="fa fa-caret-right fa-lg dark" id="redCaret" aria-hidden="true"></i></span>
+              <div id="redCounter">
+              </div>
             </div>
-            <span><i class="fa fa-caret-left fa-lg dark" id="blackCaret" aria-hidden="true"></i></span>
-            <span><i class="fa fa-caret-right fa-lg dark" id="redCaret" aria-hidden="true"></i></span>
-            <div id="redCounter">
+            <div id="winsSection">
+              <span id="blackWinsCounter">0</span>
+              <span id="wins">Game Wins</span>
+              <span id="redWinsCounter">0</span>
             </div>
-          </div>
-          <div id="winsSection">
-            <span id="blackWinsCounter">0</span>
-            <span id="wins">Game Wins</span>
-            <span id="redWinsCounter">0</span>
           </div>
         </div>
-        <div id="buttonsSection">
-          <button class="btn btn-primary" id="start-button">New Game</button>
-          <button class="btn btn-secondary" id="settings-button">Settings</button>
+        <div class="col-sm-6">
+          <div id="buttonsSection">
+            <button class="btn btn-primary" id="start-button">New Game</button>
+            <button class="btn btn-secondary" id="settings-button">Settings</button>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -159,6 +160,9 @@
           <div class="tile board" id="tile-7-7"></div>
 
         </div>
+        <div class="text-center footer">
+          <a href="https://github.com/Tommy-Lim/project1-game"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        </div>
       </div>
     </div>
 
@@ -167,5 +171,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="./js/script.js"></script>
+    <script src="./js/formatBoard.js"></script>
   </body>
 </html>
