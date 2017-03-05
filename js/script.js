@@ -1,5 +1,6 @@
-$(".settings").hide();
-$(".overlay").hide();
+// $(".settings").hide();
+// $(".overlay").hide();
+// $(".modal-container").hide();
 
 var playerTop;
 var playerBottom;
@@ -70,7 +71,8 @@ function displayWinner(){
   if($("#messagesYes")[0].checked){
     $(".overlay").text(playerTurn+" wins!");
     $(".overlay").show();
-    setTimeout(function(){$(".overlay").hide();},3000);
+    $(".modal-container").show();
+    setTimeout(function(){$(".overlay").hide(); $(".modal-container").hide();},3000);
   }
 }
 
@@ -97,7 +99,8 @@ function displayWhoseTurn(){
   if($("#messagesYes")[0].checked){
     $(".overlay").text(playerTurn+"'s turn!");
     $(".overlay").show();
-    setTimeout(function(){$(".overlay").hide();},1000);
+    $(".modal-container").show();
+    setTimeout(function(){$(".overlay").hide(); $(".modal-container").hide();},1000);
   }
 }
 
@@ -105,7 +108,8 @@ function displayJumpAgain(){
   if($("#messagesYes")[0].checked){
     $(".overlay").text("Jump again, "+playerTurn+"!");
     $(".overlay").show();
-    setTimeout(function(){$(".overlay").hide();},2000);
+    $(".modal-container").show();
+    setTimeout(function(){$(".overlay").hide(); $(".modal-container").hide();},2000);
   }
 }
 
@@ -481,20 +485,24 @@ $(".tile").click(function(event){
 });
 
 $("#start-button").click(function(){
+  $(".modal-container").show();
   redIsTop();
   setBoard();
 });
 
 $("#settings-button").click(function(){
+  $(".modal-container").toggle();
   $(".settings").toggle();
 });
 
 $("#exitSettings").click(function(){
-  $(".settings").toggle();
+  $(".modal-container").hide();
+  $(".settings").hide();
 });
 
 $(".overlay").click(function(){
   $(".overlay").hide();
+  $(".modal-container").hide();
 });
 
 
